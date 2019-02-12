@@ -15,3 +15,12 @@ import "phoenix_html"
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
+
+import project1_init from "./project1";
+
+window.addEventListener("load", (_ev) => {
+	let root = document.getElementById('root');
+	if (root) {
+		project1_init(root);
+	}
+});
