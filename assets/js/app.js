@@ -16,11 +16,11 @@ import "phoenix_html"
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
 
-//import project1_init from "./project1";
-import hangman_init from "./hangman";
+import project1_init from "./project1";
+//import hangman_init from "./hangman";
 window.addEventListener("load", (_ev) => {
 	let root = document.getElementById('root');
 	if (root) {
-		hangman_init(root);
+		project1_init(root);
 	}
 });
