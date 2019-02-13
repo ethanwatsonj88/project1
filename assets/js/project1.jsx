@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import _ from 'lodash';
+import $ from 'jquery';
 
 export default function project1_init(root) {
 	ReactDOM.render(<Project1 />, root);
