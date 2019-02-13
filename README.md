@@ -21,10 +21,17 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 ## Fight
 ### data structures
 p1name - string that user types in
+
 p2name - string that user types in
+
 p1cards - list of cards player has
+
 p2cards - list of cards player has
+
 card - map of attributes of a card
+
 	%{ :name => "name", :actions => moves }
+
 moves - map of move name and damage
+
 	%{ :name => "name", :damage => 10 }
