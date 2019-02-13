@@ -27,12 +27,12 @@ defmodule Project1.Game do
 	def new do
 		%{
 			# new should be passed in the two names
-			p1name: "",
-			p2name: "",
+			p1name: "player1",
+			p2name: "player2",
 			p1cards: p1Cards(),
 			p2cards: p2Cards(),
 
-			p1currCard: nil,
+			p1currCard: firstCard(p1Cards()),
 			p2currCard: nil,
 			isGameOver: false,
 		}
@@ -40,6 +40,15 @@ defmodule Project1.Game do
 
 	def client_view(game) do
 
+	end
+
+	def move(game, player, card, move) do
+
+	end
+	
+	# returns the first card in a list of cards for currCard state field
+	def firstCard([head | tail]) do
+		head
 	end
 
 	def p1Cards() do
@@ -62,3 +71,5 @@ end
 # can implement later:
 # pokemon types
 # picking your pokemon
+
+IO.inspect(Project1.Game.new())
