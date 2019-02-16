@@ -3,3 +3,14 @@
 .card_image {
 	width: 200px;	
 }
+
+.options {
+	border: 1px dashed black;
+	padding: 10px;
+}
+
+.option_button {
+	display: inline;
+	background-color: yellow;
+	padding: 5px;
+}

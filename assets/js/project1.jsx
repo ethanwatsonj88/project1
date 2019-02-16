@@ -10,6 +10,16 @@ export default function project1_init(root) {
 class Project1 extends React.Component {
 	constructor(props) {
 		super(props);
+
+		// p1Deck Contains all cards, currCard is a pointer to that deck
+		this.state = {
+			me: "",
+			opponent: "",
+			p1Deck: [],
+			p2Deck: [],
+			p1CurrCard: "", 
+			p2CurrCard: "",
+		}
 	}
 
 	render() {
@@ -20,11 +30,13 @@ class Project1 extends React.Component {
 					<div className="player2CurrCard">
 						{this.renderCard("blue_ghost")}
 					</div>
-					<div className="player1CurrCard">
-						{this.renderCard("red_ghost")}
-					</div>
-					<div className="movesBox">
-						{this.renderMove()}
+					<div className="row">
+						<div className="player1CurrCard">
+							{this.renderCard("red_ghost")}
+						</div>
+						<div className="movesBox">
+							{this.renderOptions()}
+						</div>
 					</div>
 				</div>			
 			</div>
@@ -37,9 +49,9 @@ class Project1 extends React.Component {
 		);
 	}
 
-	renderMove() {
+	renderOptions() {
 		return (
-			<Move />
+			<Options />
 		);
 	}
 }
@@ -56,10 +68,20 @@ function Card(props) {
 	);
 }
 
-function Move(props) {
+function Options(props) {
 	return (
-		<div className="move">
-			Punch
+		<div className="options">
+			<ul>
+				<li><div className="option_button">Fight</div></li>
+				<li><div className="option_button">Switch</div></li>
+				<li><div className="option_button">Give Up</div></li>
+			</ul>
 		</div>
+	);
+}
+
+function Fight(props) {
+	return (
+	<div></div>	
 	);
 }
