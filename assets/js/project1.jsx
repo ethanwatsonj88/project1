@@ -18,10 +18,10 @@ class Project1 extends React.Component {
 				<h1>Pokemon Showdown</h1>
 				<div className="board">
 					<div className="player2CurrCard">
-						{this.renderCard()}
+						{this.renderCard("blue_ghost")}
 					</div>
 					<div className="player1CurrCard">
-						{this.renderCard()}
+						{this.renderCard("red_ghost")}
 					</div>
 					<div className="movesBox">
 						{this.renderMove()}
@@ -31,9 +31,9 @@ class Project1 extends React.Component {
 		);
 	}
 
-	renderCard() {
+	renderCard(player) {
 		return (
-			<Card />
+			<Card player={player}/>
 		);
 	}
 
@@ -45,9 +45,13 @@ class Project1 extends React.Component {
 }
 
 function Card(props) {
+	let card_name = "";
+	let ghost = "blue_ghost";
 	return (
 		<div className="currCard">
-			Pikachu
+			<img className="card_image" src={`/images/${props.player}.png`} alt="blue ghost"/>
+			<br/>
+			{props.player}
 		</div>
 	);
 }

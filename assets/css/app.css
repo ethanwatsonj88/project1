@@ -1,2 +1,5 @@
 /* This file is for your main application css. */
 @import "~milligram/dist/milligram";
+.card_image {
+	width: 200px;	
+}
