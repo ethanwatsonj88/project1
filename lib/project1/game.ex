@@ -25,15 +25,18 @@ defmodule Project1.Game do
 	# action(player,
 
 	def new do
+		[p1CardsHead | p1CardsTail] = p1Cards()
+		[p2CardsHead | p2CardsTail] = p2Cards()		
+
 		%{
 			# new should be passed in the two names
-			p1name: "player1",
-			p2name: "player2",
-			p1cards: p1Cards(),
-			p2cards: p2Cards(),
-
-			p1currCard: firstCard(p1Cards()),
-			p2currCard: nil,
+			p1Name: "player1",
+			p2Name: "player2",
+			p1Deck: p1CardsTail,
+			p2Deck: p2CardsTail,
+	
+			p1CurrCard: p1CardsHead,
+			p2CurrCard: p1CardsTail,
 			isGameOver: false,
 		}
 	end
@@ -42,7 +45,24 @@ defmodule Project1.Game do
 
 	end
 
-	def move(game, player, card, move) do
+	# player chose to fight with currCard
+	# player is string of player name
+	# card is a card
+	# move is a move
+	def move(game, player, move) do
+		if player == game.p1Name do
+			# player one's turn
+			# we should damage player2's card based on damage in move
+			p2CurrCard = game.p2CurrCard
+			moveDamage = Map.get(move, :damage)
+			p2CurrCard.
+		else
+
+		end
+	end
+
+	# player chose to switch card to different card in dekc for turn
+	def switchCard() do
 
 	end
 	
@@ -60,7 +80,9 @@ defmodule Project1.Game do
 	def p2Cards() do
 		move1 = %{ :name => "kick", :damage => 10 } 
 		card1 = %{ :name => "macho", :health => 40, :moves => [move1] }
-		[card1] 
+		move2 = %{ :name => "fireball", :damage => 15 }
+		card2 = %{ :name => "charizard", :health => 5, :moves=> [move2] }
+		[card1, card2] 
 	end
 end
 
