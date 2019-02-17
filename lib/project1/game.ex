@@ -43,11 +43,11 @@ defmodule Project1.Game do
     |> Map.update!(:health, fn x -> x - dmg end)
 
     fightHelper = fn _ ->
-      if c[:health] > 0 do 
+      if c[:health] > 0 do
         b[:name] <> "turn"
       else
       #TODO fix
-        if (List.foldr(b[:cards], 0,      
+        if (List.foldr(b[:cards], 0,
                  #fn x, acc -> if x[:health] > 0 do acc + 1 else acc end end)
                  fn _, _ -> 0 end)
                  == 0) do
@@ -58,7 +58,7 @@ defmodule Project1.Game do
       end
     end
 
-    Map.replace!(game, a, Map.replace!(b, :cards, 
+    Map.replace!(game, a, Map.replace!(b, :cards,
                  List.replace_at(b[:cards], ind, c)))
     |> Map.update!(:condition, fightHelper)
   end
@@ -80,7 +80,21 @@ defmodule Project1.Game do
   end
 
 	def client_view(game) do
+		p1_name = game.p1_name;
+		p2_name = game.p2_name;
+		p1_deck = game.p1_deck;
+		p2_deck = game.p2_deck;
+		p1_curr_card = game.p1_curr_card;
+		p2_curr_card = game.p2_curr_card;
 
+		%{
+			p1_name: p1_name,
+			p2_name: p2_name,
+			p1_deck: p1_deck,
+			p2_deck: p2_deck,
+			p1_curr_card: p1_curr_card,
+			p2_curr_card: p2_curr_card,
+		}
 	end
 
 	def p1Cards() do

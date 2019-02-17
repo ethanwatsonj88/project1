@@ -10,17 +10,21 @@ import css from "../css/app.css"
 // Import dependencies
 //
 import "phoenix_html"
+import $ from "jquery";
 
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
-
+import socket from "./socket";
 import project1_init from "./project1";
+
 //import hangman_init from "./hangman";
-window.addEventListener("load", (_ev) => {
+$(() => {
 	let root = document.getElementById('root');
 	if (root) {
-		project1_init(root);
+		let channel = socket.channel("games:" + window.gameName, {});
+		// We want to join in the react component.
+		project1_init(root, channel);
 	}
 });
