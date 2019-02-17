@@ -1,75 +1,94 @@
 defmodule Project1.Game do
-
-	# stages of the game:
-	# picking cards
-	#		present 5 cards
-	# 	p1 and p2 pick cards simultaneously
-	#		p1 and p2 ready up
-	# 	moves on to game
-
-	# !!!!start with this:
-	#		p1 moves first
-	#		sends action
-
-	# data structures
-	# p1name - string that user types in
-	# p2name - string that user types in
-	# p1cards - list of cards player has
-	# p2cards - list of cards player has
-	# card - map of attributes of a card
-	#		%{ :name => "name", :health => 10, :moves => moves }
-	# moves - map of move name and damage
-	#		%{ :name => "name", :damage => 10 }
-
-	# functions called from react
-	# action(player,
-
-	def new do
+#	def new(p1name, p2name, p1cards, p2cards) do
+  def new(p1name, p2name) do
 		%{
-			# new should be passed in the two names
-			p1name: "player1",
-			p2name: "player2",
-			p1cards: p1Cards(),
-			p2cards: p2Cards(),
-
-			p1currCard: firstCard(p1Cards()),
-			p2currCard: nil,
-			isGameOver: false,
+      p1: player(p1name, p1Cards(), 0),
+      p2: player(p2name, p1Cards(), 0),
+      condition: p1name <> "turn",
 		}
 	end
+
+  def getPlayer(game, name) do
+    if name == game[:p1][:name] do
+      :p1
+    else
+      :p2
+    end
+  end
+
+  def getOtherPlayer(game, name) do
+    if name == game[:p1][:name] do
+      :p2
+    else
+      :p1
+    end
+  end
+
+  def player(name, cards, ind) do
+    %{
+      name: name,
+      cards: cards,
+      ind: ind,
+    }
+  end
+
+  def fight(game, name, dmg) do
+    a = getOtherPlayer(game, name)
+    b = game[a]
+    ind = b[:ind]
+
+    c = b
+    |> Map.fetch!(:cards)
+    |> Enum.at(ind)
+    |> Map.update!(:health, fn x -> x - dmg end)
+
+    fightHelper = fn _ ->
+      if c[:health] > 0 do 
+        b[:name] <> "turn"
+      else
+      #TODO fix
+        if (List.foldr(b[:cards], 0,      
+                 #fn x, acc -> if x[:health] > 0 do acc + 1 else acc end end)
+                 fn _, _ -> 0 end)
+                 == 0) do
+          name <> "win"
+        else
+          b[:name] <> "switch"
+        end
+      end
+    end
+
+    Map.replace!(game, a, Map.replace!(b, :cards, 
+                 List.replace_at(b[:cards], ind, c)))
+    |> Map.update!(:condition, fightHelper)
+  end
+
+  #TODO check if switch > 0
+  def switch(game, name, ind) do
+    a = getPlayer(game, name)
+    b = game
+    |> Map.fetch!(a)
+    |> Map.replace!(:ind, ind)
+
+    Map.replace!(game, a, b)
+    |> Map.replace!(:condition, game[getOtherPlayer(game, name)][:name] <> "turn")
+  end
+
+  def giveup(game, name) do
+    a = getOtherPlayer(game, name)
+    Map.replace!(game, :condition, a[:name] <> "win")
+  end
 
 	def client_view(game) do
 
 	end
 
-	def move(game, player, card, move) do
-
-	end
-	
-	# returns the first card in a list of cards for currCard state field
-	def firstCard([head | tail]) do
-		head
-	end
-
 	def p1Cards() do
-		move1 = %{ :name => "punch", :damage => 10 }
-		card1 = %{ :name => "pikachu", :health => 20, :moves => [move1] }
-		[card1]
-	end
-
-	def p2Cards() do
-		move1 = %{ :name => "kick", :damage => 10 } 
-		card1 = %{ :name => "macho", :health => 40, :moves => [move1] }
-		[card1] 
+		moves = [%{ :name => "punch", :damage => 10 },
+             %{ :name => "kick", :damage => 20 },
+             %{ :name => "headbutt", :damage => 30},
+             %{ :name => "split", :damage => 40},]
+		card = %{ :name => "pikachu", :health => 20, :moves => moves, :source => "blue_ghost" }
+    [card, card]
 	end
 end
-
-
-
-
-
-# can implement later:
-# pokemon types
-# picking your pokemon
-
-IO.inspect(Project1.Game.new())
