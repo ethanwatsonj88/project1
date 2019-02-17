@@ -25,24 +25,36 @@ defmodule Project1.Game do
 	# action(player,
 
 	def new do
-		[p1CardsHead | p1CardsTail] = p1Cards()
-		[p2CardsHead | p2CardsTail] = p2Cards()		
 
 		%{
 			# new should be passed in the two names
-			p1Name: "player1",
-			p2Name: "player2",
-			p1Deck: p1CardsTail,
-			p2Deck: p2CardsTail,
+			p1_name: "ethan",
+			p2_name: "justin",
+			p1_deck: p1_deck(),
+			p2_deck: p2_deck(),
 	
-			p1CurrCard: p1CardsHead,
-			p2CurrCard: p1CardsTail,
+			p1_curr_card: 0, # first item in list
+			p2_curr_card: 0, # first item in list
 			isGameOver: false,
 		}
 	end
 
 	def client_view(game) do
+		p1_name = game.p1_name;
+		p2_name = game.p2_name;
+		p1_deck = game.p1_deck;
+		p2_deck = game.p2_deck;
+		p1_curr_card = game.p1_curr_card;
+		p2_curr_card = game.p2_curr_card;
 
+		%{
+			p1_name: p1_name,
+			p2_name: p2_name,
+			p1_deck: p1_deck,
+			p2_deck: p2_deck,
+			p1_curr_card: p1_curr_card,
+			p2_curr_card: p2_curr_card,
+		}
 	end
 
 	# player chose to fight with currCard
@@ -66,22 +78,20 @@ defmodule Project1.Game do
 
 	end
 	
-	# returns the first card in a list of cards for currCard state field
-	def firstCard([head | tail]) do
-		head
-	end
-
-	def p1Cards() do
-		move1 = %{ :name => "punch", :damage => 10 }
-		card1 = %{ :name => "pikachu", :health => 20, :moves => [move1] }
+	def p1_deck() do
+		move1 = %{ :name => "swipe", :damage => 10 }
+		card1 = %{ :id => 1, :name => "red ghost", :img_src => "red_ghost",
+							 :health => 20, :moves => [move1] }
 		[card1]
 	end
 
-	def p2Cards() do
+	def p2_deck() do
 		move1 = %{ :name => "kick", :damage => 10 } 
-		card1 = %{ :name => "macho", :health => 40, :moves => [move1] }
+		card1 = %{ :id => 2, :name => "blue ghost", :img_src => "blue_ghost",
+							 :health => 40, :moves => [move1] }
 		move2 = %{ :name => "fireball", :damage => 15 }
-		card2 = %{ :name => "charizard", :health => 5, :moves=> [move2] }
+		card2 = %{ :id => 3, :name => "green ghost", :img_src => "green_ghost",
+							 :health => 5, :moves=> [move2] }
 		[card1, card2] 
 	end
 end

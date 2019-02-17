@@ -1,16 +1,38 @@
 /* This file is for your main application css. */
 @import "~milligram/dist/milligram";
+	
+li {
+	list-style-type: none;
+}
+
 .card_image {
-	width: 200px;	
+	width: 100px;	
 }
 
 .options {
-	border: 1px dashed black;
+	border: 1px solid grey;
 	padding: 10px;
+	position: absolute;
+	bottom: 0;
 }
 
 .option_button {
-	display: inline;
+	display: block;
 	background-color: yellow;
 	padding: 5px;
+	width: 100px;
+}
+
+.middle_board {
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+
+.moves_box {
+	display: inline-block;
+}
+
+.row {
+	margin-left: 0px;
+	position: relative;
 }
