@@ -80,12 +80,12 @@ defmodule Project1.Game do
   end
 
 	def client_view(game) do
-		p1_name = game.p1_name;
-		p2_name = game.p2_name;
-		p1_deck = game.p1_deck;
-		p2_deck = game.p2_deck;
-		p1_curr_card = game.p1_curr_card;
-		p2_curr_card = game.p2_curr_card;
+		p1_name = game[:p1][:name];
+		p2_name = game[:p2][:name];
+		p1_deck = game[:p1][:cards];
+		p2_deck = game[:p2][:cards];
+		p1_curr_card = game[:p1][:ind];
+		p2_curr_card = game[:p2][:ind];
 
 		%{
 			p1_name: p1_name,
