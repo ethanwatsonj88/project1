@@ -5,7 +5,7 @@ defmodule Project1Web.GamesChannel do
 	
   def join("games:" <> name, payload, socket) do
     if authorized?(payload) do
-			game = Game.new()
+			game = Game.new("justin", "ethan")
 			socket = socket
 			|> assign(:game, game)
 			|> assign(:name, name)
@@ -15,7 +15,7 @@ defmodule Project1Web.GamesChannel do
     end
   end
 
-	def handle_in("fight", %{"letter" => ll }, socket) do
+	def handle_in("fight", %{"letter" => ll `}, socket) do
 		game = Game.fight(socket.assigns[:game], ll)
 		socket = assign(socket, :game, game)
 		{:reply, {:ok, %{ "game" => Game.client_view(game)}}, socket}

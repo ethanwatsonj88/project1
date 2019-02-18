@@ -18,13 +18,16 @@ import $ from "jquery";
 // import socket from "./socket"
 import socket from "./socket";
 import project1_init from "./project1";
-
+import lobby_init from "./lobby";
 //import hangman_init from "./hangman";
 $(() => {
 	let root = document.getElementById('root');
+	let lobby = document.getElementById('lobby');
 	if (root) {
 		let channel = socket.channel("games:" + window.gameName, {});
 		// We want to join in the react component.
 		project1_init(root, channel);
+	} else if (lobby) {
+		lobby_init(lobby);
 	}
 });
