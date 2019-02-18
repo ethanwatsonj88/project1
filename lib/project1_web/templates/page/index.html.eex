@@ -1,6 +1,12 @@
 <div class="row">
 	<div class="column">
-		<h1 id="index-page">Join a Game</h1>
-		<p><a href="/game/demo">Join "demo"</a></p>
+		<h1>Project1 Lobby Page</h1>
+		<%= form_for @ conn, "/game/demo", fn f -> %>
+   		<p>Enter player name: <%= text_input f, :p_name %></p>
+      <p><%= submit "go to game" %></p>
+      <% end %>
+		<div id="lobby">
+			React component loading...
+		</div>
 	</div>
 </div>

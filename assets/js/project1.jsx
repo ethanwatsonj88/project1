@@ -28,6 +28,7 @@ class Project1 extends React.Component {
 			p2_deck: [{img_src: "blue_ghost"}],
 			p1_curr_card: 0, 
 			p2_curr_card: 0,
+			options_condition: "show_moves",
 		}
 	}
 
@@ -36,6 +37,7 @@ class Project1 extends React.Component {
 		console.log(view.game.p1_deck[0].name)
 		console.log(this.state)
 		this.setState(view.game);
+		console.log(this.state);
 	}
 
 	render() {
