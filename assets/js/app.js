@@ -25,8 +25,10 @@ $(() => {
 	let lobby = document.getElementById('lobby');
 	if (root) {
 		let channel = socket.channel("games:" + window.gameName, {});
+		// if root, we can also grab player name and pass that to project1_init
+		let client_p_name = $('meta[name=client_p_name]').attr("content");
 		// We want to join in the react component.
-		project1_init(root, channel);
+		project1_init(root, channel, client_p_name);
 	} else if (lobby) {
 		lobby_init(lobby);
 	}

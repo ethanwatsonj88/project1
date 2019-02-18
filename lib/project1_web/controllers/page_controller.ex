@@ -6,6 +6,6 @@ defmodule Project1Web.PageController do
   end
 
 	def game(conn, %{"name" => name, "p_name" => p_name}) do
-		render(conn, "game.html", name: name, p_name: name)
+		render(conn, "game.html", name: name, p_name: p_name)
 	end
 end

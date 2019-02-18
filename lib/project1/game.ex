@@ -3,7 +3,7 @@ defmodule Project1.Game do
   def new(p1name, p2name) do
 		%{
       p1: player(p1name, p1Cards(), 0),
-      p2: player(p2name, p1Cards(), 0),
+      p2: player(p2name, p2Cards(), 0),
       condition: p1name <> "turn",
 		}
 	end
@@ -106,5 +106,14 @@ defmodule Project1.Game do
              %{ :name => "split", :damage => 40},]
 		card = %{ :name => "pikachu", :health => 20, :moves => moves, :img_src => "blue_ghost" }
     [card, card]
+	end
+
+	def p2Cards() do
+		moves = [%{ :name => "punch", :damage => 10 },
+             %{ :name => "kick", :damage => 20 },
+             %{ :name => "headbutt", :damage => 30},
+             %{ :name => "split", :damage => 40},]
+		card = %{ :name => "pikachu", :health => 20, :moves => moves, :img_src => "purple_ghost" }
+    [card]
 	end
 end

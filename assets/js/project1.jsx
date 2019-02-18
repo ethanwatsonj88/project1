@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import $ from 'jquery';
 
-export default function project1_init(root, channel) {
-	ReactDOM.render(<Project1 channel={channel} />, root);
+export default function project1_init(root, channel, client_p_name) {
+	ReactDOM.render(<Project1 channel={channel} client_p_name={client_p_name} />, root);
 }
 
 class Project1 extends React.Component {
@@ -12,6 +12,8 @@ class Project1 extends React.Component {
 		super(props);
 
 		this.channel = props.channel;		
+
+		this.client_p_name = props.client_p_name;
 
 		this.channel
           .join()
@@ -38,6 +40,7 @@ class Project1 extends React.Component {
 		console.log(this.state)
 		this.setState(view.game);
 		console.log(this.state);
+		console.log("curr player name is: " + this.client_p_name);
 	}
 
 	render() {
