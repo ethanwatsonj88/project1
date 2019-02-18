@@ -86,6 +86,7 @@ defmodule Project1.Game do
 		p2_deck = game[:p2][:cards];
 		p1_curr_card = game[:p1][:ind];
 		p2_curr_card = game[:p2][:ind];
+    condition = game[:condition]
 
 		%{
 			p1_name: p1_name,
@@ -94,6 +95,7 @@ defmodule Project1.Game do
 			p2_deck: p2_deck,
 			p1_curr_card: p1_curr_card,
 			p2_curr_card: p2_curr_card,
+      condition: condition,
 		}
 	end
 
