@@ -15,9 +15,11 @@ defmodule Project1Web.GamesChannel do
     end
   end
 
-	def handle_in("fight", %{"letter" => ll }, socket) do
-		game = Game.fight(socket.assigns[:game], ll)
+	def handle_in("fight", %{"player" => p_name, "move_damage" => damage }, socket) do
+		name = socket.assigns[:name]
+		game = Game.fight(socket.assigns[:game], p_name, damage)
 		socket = assign(socket, :game, game)
+		IO.puts "fought"
 		{:reply, {:ok, %{ "game" => Game.client_view(game)}}, socket}
 	end
 

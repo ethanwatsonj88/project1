@@ -1,5 +1,9 @@
 /* This file is for your main application css. */
 @import "~milligram/dist/milligram";
+
+body {
+	font-family: 'Space Mono', monospace;
+}
 	
 li {
 	list-style-type: none;

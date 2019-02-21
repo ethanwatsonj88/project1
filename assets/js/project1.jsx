@@ -26,11 +26,11 @@ class Project1 extends React.Component {
 			// this must be populate on startup? problems with rendering this empty
 			p1_name: "",
 			p2_name: "",
-			p1_deck: [{img_src: "red_ghost"}],
-			p2_deck: [{img_src: "blue_ghost"}],
+			p1_deck: [{img_src: "red_ghost", health: 0, moves: [{damage: 10, name: "fake"}]}],
+			p2_deck: [{img_src: "blue_ghost", health: 0, moves: Array(4)}],
 			p1_curr_card: 0, 
 			p2_curr_card: 0,
-			options_condition: "show_moves",
+			options_condition: "show_options",
 		}
 	}
 
@@ -44,34 +44,91 @@ class Project1 extends React.Component {
 	}
 
 	render() {
+		let i_am_p1 = null;
+		// if p1 is the current client player, then present that player at the bottom w option box
+		if (this.client_p_name == this.state.p1_name) {
+			i_am_p1 = true;
+		}
+		else {
+			// i am player 2
+			i_am_p1 = false;
+		}
 		return (
 			<div>
 				<h1>Pokemon Showdown</h1>
 				<div className="board">
 					<div className="p2_name">
-						{this.state.p2_name}
+						{ this.render_opp_name(i_am_p1) }
 					</div>
 					<div className="player2CurrCard">
-						health: {this.state.p2_deck[this.state.p2_curr_card].health}
-						{this.renderCard(this.state.p2_deck[this.state.p2_curr_card].img_src)}
+						health: { this.render_opp_curr_card_health(i_am_p1) }
+						{ this.render_opp_curr_card(i_am_p1) }
 					</div>
 					<div className="middle_board">
 					</div>
 					<div className="p1_name">
-						{this.state.p1_name}
+						{ this.render_my_name(i_am_p1) }
 					</div>
-					health: {this.state.p1_deck[this.state.p1_curr_card].health}
+					health: { this.render_my_curr_card_health(i_am_p1) }
 					<div className="row">
 						<div className="player1CurrCard">
-							{this.renderCard(this.state.p1_deck[this.state.p1_curr_card].img_src)}
+							{ this.render_my_curr_card(i_am_p1) }
 						</div>
 						<div className="moves_box">
-							{this.renderOptions()}
+							{this.renderOptions(i_am_p1)}
 						</div>
 					</div>
 				</div>			
 			</div>
 		);
+	}
+	
+	render_my_curr_card(i_am_p1) {
+		if (i_am_p1) {
+			return this.renderCard(this.state.p1_deck[this.state.p1_curr_card].img_src)
+		} else {
+			return this.renderCard(this.state.p2_deck[this.state.p2_curr_card].img_src)
+		}
+	}
+
+	render_my_curr_card_health(i_am_p1) {
+		if (i_am_p1) {
+			return this.state.p1_deck[this.state.p1_curr_card].health
+		} else {
+			return this.state.p2_deck[this.state.p2_curr_card].health
+		}
+	}
+
+	render_my_name(i_am_p1) {
+		if (i_am_p1) {
+			return this.state.p1_name;
+		} else {
+			return this.state.p2_name;
+		}
+	}
+
+	render_opp_curr_card(i_am_p1) {
+		if (i_am_p1) {
+			return this.renderCard(this.state.p2_deck[this.state.p2_curr_card].img_src)
+		} else {
+			return this.renderCard(this.state.p1_deck[this.state.p1_curr_card].img_src)
+		}
+	}
+
+	render_opp_curr_card_health(i_am_p1) {
+		if (i_am_p1) {
+			return this.state.p2_deck[this.state.p2_curr_card].health;
+		} else {
+			return this.state.p1_deck[this.state.p1_curr_card].health;
+		}
+	}
+
+	render_opp_name(i_am_p1) {
+		if (i_am_p1) {
+			return this.state.p2_name;
+		} else {
+			return this.state.p1_name;
+		}
 	}
 
 	renderCard(card_name) {
@@ -80,11 +137,75 @@ class Project1 extends React.Component {
 		);
 	}
 
-	renderOptions() {
+	renderOptions(i_am_p1) {
+		if (this.state.options_condition == "show_options") {
+			return (
+				<div className="options">
+					{this.renderOption("fight")}
+					{this.renderOption("switch")}
+					{this.renderOption("give up")}
+				</div>
+			);
+		} else if (this.state.options_condition == "show_moves") {
+			if (i_am_p1) {
+				return (
+					<div className="options">
+						{this.renderMove(this.state.p1_deck[this.state.p1_curr_card].moves[0].name,
+														this.state.p1_deck[this.state.p1_curr_card].moves[0].damage)}
+					</div>
+				);
+			} else {
+				return (
+					<div className="options">
+						{this.renderMove(this.state.p2_deck[this.state.p2_curr_card].moves[0].name,
+														this.state.p2_deck[this.state.p2_curr_card].moves[0].damage,
+														i_am_p1)}
+						{this.renderMove(this.state.p2_deck[this.state.p2_curr_card].moves[1].name,
+														this.state.p2_deck[this.state.p2_curr_card].moves[1].damage)}
+					</div>
+				);
+			}
+		}
+	}
+
+	renderOption(option_name) {
 		return (
-			<Options />
+			<Option
+				onClick={() => this.handleOptionClick(option_name)}
+				option_name = {option_name}
+			/>
 		);
 	}
+
+	renderMove(move_name, move_damage, i_am_p1) {
+		return (
+			<Move
+				onClick={() => this.handleMoveClick(move_name, move_damage, i_am_p1)}
+				move_name = {move_name}
+			/>
+		);
+	}
+
+	handleOptionClick(option_name) {
+		console.log("option clicked");
+		if (option_name == "fight") {
+			let state1 = _.assign({}, this.state, {
+				options_condition: "show_moves",
+			});
+			this.setState(state1);
+		}
+	}
+
+	handleMoveClick(move_name, move_damage, i_am_p1) {
+		if (i_am_p1) {
+			this.channel.push("fight", { player: this.state.p1_name, move_damage: move_damage })
+					.receive("ok", this.got_view.bind(this));
+		} else {
+			this.channel.push("fight", { player: this.state.p2_name, move_damage: move_damage })
+					.receive("ok", this.got_view.bind(this));
+		}
+	}
+		
 }
 
 function Card(props) {
@@ -99,13 +220,15 @@ function Card(props) {
 	);
 }
 
-function Options(props) {
+function Option(props) {
 	return (
-		<div className="options">
-			<div className="option_button">Fight</div>
-			<div className="option_button">Switch</div>
-			<div className="option_button">Give Up</div>
-		</div>
+		<div className="option_button" onClick={props.onClick}>{props.option_name}</div>
+	);
+}
+
+function Move(props) {
+	return (
+		<div className="option_button" onClick={props.onClick}>{props.move_name}</div>
 	);
 }
 

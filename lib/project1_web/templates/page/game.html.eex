@@ -1,22 +1,14 @@
 <script>
-	window.gameName = "<%= @name %>";
+	window.gameName = "<%= @server_name %>";
+	window.pName = "<%= @p_name %>";
 </script>
-
-<html>
-<head>
-	<meta name="client_p_name" content=<%= @p_name %>
-</head>
-<body>
 
 	<div class="row">
 		<div class="column">
-			<h1>Project1 Game: <%= @name %></h1>
-			<h2>p1 name!!!!!! <%= @p_name %></h2>
-			
+			<h1>Project1 Game: <%= @server_name %></h1>
+			<h2>You are: <%= @p_name %></h2>
 			<div id="root">
 				React component loading...
 			</div>
 		</div>
 	</div>
-</body>
-</html>

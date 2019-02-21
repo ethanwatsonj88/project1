@@ -113,7 +113,7 @@ defmodule Project1.Game do
              %{ :name => "kick", :damage => 20 },
              %{ :name => "headbutt", :damage => 30},
              %{ :name => "split", :damage => 40},]
-		card = %{ :name => "pikachu", :health => 20, :moves => moves, :img_src => "purple_ghost" }
+		card = %{ :name => "pikachu", :health => 30, :moves => moves, :img_src => "purple_ghost" }
     [card]
 	end
 end
