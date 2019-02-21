@@ -22,7 +22,7 @@ defmodule Project1Web.GamesChannel do
     {:reply, {:ok, %{"game" => view}}, socket}
   end
 
-  def handle_in("switch", %{"name" => n, "ind" => i}, socket) do
+  def handle_in("switch", %{"player" => n, "ind" => i}, socket) do
     room_name = socket.assigns[:name]
     Project1.GameServer.switch(room_name, n, i)
     view = Project1.GameServer.client_view(room_name)
@@ -30,8 +30,9 @@ defmodule Project1Web.GamesChannel do
     {:reply, {:ok, %{"game" => view}}, socket}
   end
 
-  def handle_in("giveup", %{"name" => n}, socket) do
+  def handle_in("giveup", %{"player" => n}, socket) do
     room_name = socket.assigns[:name]
+    Project1.GameServer.giveup(room_name, n)
     view = Project1.GameServer.client_view(room_name)
     push_update!(view, socket)
     {:reply, {:ok, %{"game" => view}}, socket}

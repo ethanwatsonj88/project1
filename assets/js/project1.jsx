@@ -20,7 +20,7 @@ class Project1 extends React.Component {
           .receive("ok", this.got_view.bind(this))
           .receive("error", resp => { console.log("Unable to join", resp); });
 
-    this.channel.on("update", function() { console.log("got update woo")})
+    this.channel.on("update", this.got_view.bind(this))
 
 		// p1Deck Contains all cards, currCard is a pointer to that deck
 		this.state = {
@@ -153,53 +153,52 @@ class Project1 extends React.Component {
 	renderOptions(i_am_p1) {
 		let only_switch = this.state.condition == "justinswitch" || this.state.condition == "ethanswitch";
 
-		if ((i_am_p1 && this.state.condition == "justinturn")
-			|| (!i_am_p1 && this.state.condition == "ethanturn")) {
+		if ((i_am_p1 && (this.state.condition == "justinturn" || this.state.condition == "justinswitch"))
+			|| (!i_am_p1 && (this.state.condition == "ethanturn" || this.state.condition == "ethanswitch"))) {
 			// can move
+			let deck = []
+			let cur_card = -1
+			if (i_am_p1) {
+				deck = this.state.p1_deck
+				cur_card = this.state.p1_curr_card
+			} else {
+				deck = this.state.p2_deck
+				cur_card = this.state.p2_curr_card
+			}
 			if (this.state.options_condition == "show_options") {
-			return (
-				<div className="options">
-					{this.renderOption("fight", only_switch)}
-					{this.renderOption("switch")}
-					{this.renderOption("give up")}
-				</div>
-			);
+				return (
+					<div className="options">
+						{this.renderOption("fight", only_switch)}
+						{this.renderOption("switch")}
+						{this.renderOption("give up")}
+						</div>
+					);
 			} else if (this.state.options_condition == "show_moves") {
-				if (i_am_p1) {
-					return (
-						<div className="options">
-							{this.renderMove(this.state.p1_deck[this.state.p1_curr_card].moves[0].name,
-															this.state.p1_deck[this.state.p1_curr_card].moves[0].damage,
-															i_am_p1)}
-							{this.renderMove(this.state.p1_deck[this.state.p1_curr_card].moves[1].name,
-															this.state.p1_deck[this.state.p1_curr_card].moves[1].damage,
-															i_am_p1)}
-							{this.renderMove(this.state.p1_deck[this.state.p1_curr_card].moves[2].name,
-															this.state.p1_deck[this.state.p1_curr_card].moves[2].damage,
-															i_am_p1)}
-							{this.renderMove(this.state.p1_deck[this.state.p1_curr_card].moves[3].name,
-															this.state.p1_deck[this.state.p1_curr_card].moves[3].damage,
-															i_am_p1)}
-						</div>
-					);
-				} else {
-					return (
-						<div className="options">
-							{this.renderMove(this.state.p2_deck[this.state.p2_curr_card].moves[0].name,
-															this.state.p2_deck[this.state.p2_curr_card].moves[0].damage,
-															i_am_p1)}
-							{this.renderMove(this.state.p2_deck[this.state.p2_curr_card].moves[1].name,
-															this.state.p2_deck[this.state.p2_curr_card].moves[1].damage,
-															i_am_p1)}
-							{this.renderMove(this.state.p2_deck[this.state.p2_curr_card].moves[2].name,
-															this.state.p2_deck[this.state.p2_curr_card].moves[2].damage,
-															i_am_p1)}
-							{this.renderMove(this.state.p2_deck[this.state.p2_curr_card].moves[3].name,
-															this.state.p2_deck[this.state.p2_curr_card].moves[3].damage,
-															i_am_p1)}
-						</div>
-					);
+				return (
+					<div className="options">
+						{this.renderMove(deck[cur_card].moves[0].name,
+														deck[cur_card].moves[0].damage,
+														i_am_p1)}
+						{this.renderMove(deck[cur_card].moves[1].name,
+														deck[cur_card].moves[1].damage,
+														i_am_p1)}
+						{this.renderMove(deck[cur_card].moves[2].name,
+														deck[cur_card].moves[2].damage,
+														i_am_p1)}
+						{this.renderMove(deck[cur_card].moves[3].name,
+														deck[cur_card].moves[3].damage,
+														i_am_p1)}
+					</div>
+				);
+			} else if (this.state.options_condition == "show_switch"){
+				let switchTo = []
+				for (let i = 0; i < deck.length; i++) {
+					if (i == cur_card || deck[i].health <= 0) {
+						continue
+					}
+					switchTo.push(this.renderSwitch(deck[cur_card].name, i, i_am_p1))
 				}
+				return <div className="options">{switchTo}</div>
 			}
 		} else {
 			return (
@@ -235,17 +234,37 @@ class Project1 extends React.Component {
 		);
 	}
 
+	renderSwitch(name, ind, i_am_p1) {
+		return (
+			<Move
+			  onClick={() => this.handleSwitchClick(ind, i_am_p1)}
+				move_name = {name}
+			/>
+		);
+	}
+
 	handleOptionClick(option_name) {
+		let state1 = "empty"
 		if (option_name == "fight") {
-			let state1 = _.assign({}, this.state, {
+			state1 = _.assign({}, this.state, {
 				options_condition: "show_moves",
 			});
-			this.setState(state1);
 		}
+		else if (option_name == "switch") {
+			state1 = _.assign({}, this.state, {
+				options_condition: "show_switch",
+			});
+		}
+		else if (option-name == "giveup") {
+			state1 = _.assign({}, this.state, {
+				options_condition: "giveup",
+			});
+		}
+
+		this.setState(state1);
 	}
 
 	handleMoveClick(move_name, move_damage, i_am_p1) {
-		console.log("iamp1 is " + i_am_p1)
 		if (i_am_p1) {
 			this.channel.push("fight", { player: this.state.p1_name, move_damage: move_damage })
 					.receive("ok", this.got_view.bind(this));
@@ -253,8 +272,26 @@ class Project1 extends React.Component {
 			this.channel.push("fight", { player: this.state.p2_name, move_damage: move_damage })
 					.receive("ok", this.got_view.bind(this));
 		}
+		// had to add this to reset options_conditions for next turn?
+		let state1 = _.assign({}, this.state, {
+			options_condition: "show_options",
+		});
+		this.setState(state1)
 	}
 
+	handleSwitchClick(switch_ind, i_am_p1) {
+		if (i_am_p1) {
+			this.channel.push("switch", { player: this.state.p1_name, ind: switch_ind })
+					.receive("ok", this.got_view.bind(this));
+		} else {
+			this.channel.push("switch", { player: this.state.p2_name, ind: switch_ind })
+					.receive("ok", this.got_view.bind(this));
+		}
+		let state1 = _.assign({}, this.state, {
+			options_condition: "show_switch",
+		});
+		this.setState(state1)
+	}
 }
 
 function Card(props) {
