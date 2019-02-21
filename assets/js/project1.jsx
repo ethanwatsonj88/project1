@@ -28,8 +28,8 @@ class Project1 extends React.Component {
 			// this must be populate on startup? problems with rendering this empty
 			p1_name: "",
 			p2_name: "",
-			p1_deck: [{img_src: "red_ghost", health: 0, moves: [{damage: 10, name: "fake"}]}],
-			p2_deck: [{img_src: "blue_ghost", health: 0, moves: Array(4)}],
+			p1_deck: [{name: "default", img_src: "red_ghost", health: 0, moves: [{damage: 10, name: "fake"}]}],
+			p2_deck: [{name: "default", img_src: "blue_ghost", health: 0, moves: Array(4)}],
 			p1_curr_card: 0,
 			p2_curr_card: 0,
 			options_condition: "show_options",
@@ -38,7 +38,6 @@ class Project1 extends React.Component {
 
 	got_view(view) {
 		console.log("new view", view);
-		console.log(view.game.p1_deck[0].name)
 		console.log(this.state)
 		this.setState(view.game);
 		console.log(this.state);
@@ -188,6 +187,7 @@ class Project1 extends React.Component {
 						{this.renderMove(deck[cur_card].moves[3].name,
 														deck[cur_card].moves[3].damage,
 														i_am_p1)}
+						{this.renderBack()}
 					</div>
 				);
 			} else if (this.state.options_condition == "show_switch"){
@@ -198,6 +198,8 @@ class Project1 extends React.Component {
 					}
 					switchTo.push(this.renderSwitch(deck[i].name, i, i_am_p1))
 				}
+				// also add a back button at the bottom
+				switchTo.push(this.renderBack())
 				return <div className="options">{switchTo}</div>
 			}
 		} else {
@@ -205,6 +207,24 @@ class Project1 extends React.Component {
 				<div>Not your turn.</div>
 			);
 		}
+	}
+
+	renderBack() {
+		return ( 
+			<Back
+				onClick={() => this.handleBack()}
+			/>
+		);
+	}
+
+	handleBack() {
+		let state1 = _.assign({}, this.state, {
+				options_condition: "show_options",
+			});
+
+
+		this.setState(state1);
+		
 	}
 
 	renderOption(option_name, only_switch) {
@@ -321,5 +341,11 @@ function Move(props) {
 function Fight(props) {
 	return (
 	<div></div>
+	);
+}
+
+function Back(props) {
+	return (
+		<div className="option_button" onClick={props.onClick}>Back</div>
 	);
 }

@@ -129,7 +129,23 @@ defmodule Project1.Game do
              %{ :name => "split", :damage => 40},]
 		card = %{ :name => "blue ghost", :health => 20, :moves => moves, :img_src => "blue_ghost" }
 		card2 = %{ :name => "red ghost", :health => 50, :moves => moves, :img_src => "red_ghost" }
-    [card, card2]
+		pineapple_moves = [	%{ :name => "fruit punch", :damage => 14 },
+												%{ :name => "blender", :damage => 26 },
+												%{ :name => "spray", :damage => 9 },
+												%{ :name => "fortify", :damage => 0},]
+		pineapple_card = %{ :name => "pineapple", :health => 22, :moves => pineapple_moves, :img_src => "pineapple" }
+		eagle_moves = [ %{ :name => "wind tunnel", :damage => 7 },
+										%{ :name => "fly and dive", :damage => 20 },
+										%{ :name => "poke", :damage => 3 },
+										%{ :name => "bird poop", :damage => 25 },]
+		eagle_card = %{ :name => "eagle", :health => 17, :moves => eagle_moves, :img_src => "eagle" }
+		cucumber_moves = [	%{ :name => "jamaican rap", :damage => 15 },
+												%{ :name => "spray water", :damage => 2 },
+												%{ :name => "vegetable", :damage => 0 },
+												%{ :name => "put in a sock and wham", :damage => 30 },]
+		cucumber_card = %{ :name => "cucumber", :health => 48, :moves => cucumber_moves, :img_src => "cucumber" }
+		[card, card2, pineapple_card, cucumber_card]
+
 	end
 
 	def p2Cards() do
@@ -137,7 +153,10 @@ defmodule Project1.Game do
              %{ :name => "kick", :damage => 20 },
              %{ :name => "headbutt", :damage => 30},
              %{ :name => "split", :damage => 40},]
-		card = %{ :name => "pikachu", :health => 30, :moves => moves, :img_src => "purple_ghost" }
-    [card]
+		card = %{ :name => "yellow ghost", :health => 33, :moves => moves, :img_src => "yellow_ghost" }
+		card2 = %{ :name => "purple ghost", :health => 30, :moves => moves, :img_src => "purple_ghost" }
+		card3 = %{ :name => "blue boy", :health => 42, :moves => moves, :img_src => "blue_boy" }
+	
+    [card, card2, card3]
 	end
 end
