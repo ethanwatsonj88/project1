@@ -38,8 +38,6 @@ defmodule Project1.GameServer do
   end
 
   def handle_call({:fight, room_name, name, dmg}, _from, game) do
-    IO.inspect game
-    IO.puts room_name
     game = Project1.Game.fight(game, name, dmg)
     Project1.BackupAgent.put(room_name, game)
     {:reply, Project1.Game.client_view(game), game}
@@ -58,7 +56,6 @@ defmodule Project1.GameServer do
   end
 
   def handle_call({:client_view, room_name}, _from, game) do
-    game = Project1.Game.client_view(game)
     {:reply, Project1.Game.client_view(game), game}
   end
 
