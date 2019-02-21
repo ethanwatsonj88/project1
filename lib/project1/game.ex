@@ -1,12 +1,36 @@
 defmodule Project1.Game do
-#	def new(p1name, p2name, p1cards, p2cards) do
-  def new(p1name, p2name) do
-		%{
-      p1: player(p1name, p1Cards(), 0),
-      p2: player(p2name, p2Cards(), 0),
-      condition: p1name <> "turn",
-		}
-	end
+'''
+  def new() do
+    %{
+      p1: nil,
+      p2: nil,
+      condition: :wait,
+    }
+  end
+
+  def join(game, name) do
+    if !game[:p1] do
+      %{
+        p1: player(name, p1Cards(), 0),
+        p2: nil,
+        condition: :wait,
+      }
+    else
+  		%{
+        p1: game[:p1],
+        p2: player(name, p2Cards(), 0),
+        condition: game[:p1] <> "turn",
+  		}
+  	end
+  end
+'''
+  def new() do
+    %{
+      p1: player("p1", p1Cards(), 0),
+      p2: player("p2", p1Cards(), 0),
+      condition: "p1" <> "turn",
+  }
+  end
 
   def getPlayer(game, name) do
     if name == game[:p1][:name] do
@@ -42,15 +66,17 @@ defmodule Project1.Game do
     |> Enum.at(ind)
     |> Map.update!(:health, fn x -> x - dmg end)
 
+    m = Map.replace!(game, a, Map.replace!(b, :cards,
+                 List.replace_at(b[:cards], ind, c)))
+
     fightHelper = fn _ ->
       if c[:health] > 0 do
         b[:name] <> "turn"
       else
-      #TODO fix
-        if (List.foldr(b[:cards], 0,
-                 #fn x, acc -> if x[:health] > 0 do acc + 1 else acc end end)
-                 fn _, _ -> 0 end)
-                 == 0) do
+        List.foldr(b[:cards], 0,
+                   fn x, acc -> IO.puts x[:health] end)
+        IO.puts i
+        if i == 0 do
           name <> "win"
         else
           b[:name] <> "switch"
@@ -58,9 +84,7 @@ defmodule Project1.Game do
       end
     end
 
-    Map.replace!(game, a, Map.replace!(b, :cards,
-                 List.replace_at(b[:cards], ind, c)))
-    |> Map.update!(:condition, fightHelper)
+    Map.update!(m, :condition, fightHelper)
   end
 
   #TODO check if switch > 0
@@ -80,12 +104,12 @@ defmodule Project1.Game do
   end
 
 	def client_view(game) do
-		p1_name = game[:p1][:name];
-		p2_name = game[:p2][:name];
-		p1_deck = game[:p1][:cards];
-		p2_deck = game[:p2][:cards];
-		p1_curr_card = game[:p1][:ind];
-		p2_curr_card = game[:p2][:ind];
+		p1_name = game[:p1][:name]
+		p2_name = game[:p2][:name]
+		p1_deck = game[:p1][:cards]
+		p2_deck = game[:p2][:cards]
+		p1_curr_card = game[:p1][:ind]
+		p2_curr_card = game[:p2][:ind]
     condition = game[:condition]
 
 		%{
