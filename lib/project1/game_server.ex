@@ -34,32 +34,32 @@ defmodule Project1.GameServer do
   end
 
   def client_view(room_name) do
-    IO.puts "room_name" <> room_name
     GenServer.call(reg(room_name), {:client_view, room_name})
   end
 
   def handle_call({:fight, room_name, name, dmg}, _from, game) do
+    IO.inspect game
+    IO.puts room_name
     game = Project1.Game.fight(game, name, dmg)
     Project1.BackupAgent.put(room_name, game)
-    {:reply, game, game}
+    {:reply, Project1.Game.client_view(game), game}
   end
 
   def handle_call({:switch, room_name, name, ind}, _from, game) do
     game = Project1.Game.switch(game, name, ind)
     Project1.BackupAgent.put(room_name, game)
-    {:reply, game, game}
+    {:reply, Project1.Game.client_view(game), game}
   end
 
   def handle_call({:giveup, room_name, name}, _from, game) do
     game = Project1.Game.giveup(game, name)
     Project1.BackupAgent.put(room_name, game)
-    {:reply, game, game}
+    {:reply, Project1.Game.client_view(game), game}
   end
 
   def handle_call({:client_view, room_name}, _from, game) do
     game = Project1.Game.client_view(game)
-    Project1.BackupAgent.put(room_name, game)
-    {:reply, game, game}
+    {:reply, Project1.Game.client_view(game), game}
   end
 
   def init(game) do

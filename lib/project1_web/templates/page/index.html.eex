@@ -1,12 +1,10 @@
 <div class="row">
 	<div class="column">
 		<h1>Project1 Lobby Page</h1>
-		<%= form_for @ conn, "/game/demo", fn f -> %>
-   		<p>Enter player name: <%= text_input f, :p_name %></p>
-      <p><%= submit "go to game" %></p>
+		<%= form_for @conn, "/join", [as: :join], fn f -> %>
+			<p>Enter game server you would like to create or join: <%= text_input f, :server_name %></p>
+   		<p>Enter player1 or player2 name: <%= text_input f, :p_name %></p>
+      <p><%= submit "Go" %></p>
       <% end %>
-		<div id="lobby">
-			React component loading...
-		</div>
 	</div>
 </div>

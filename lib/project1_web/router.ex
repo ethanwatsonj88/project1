@@ -17,7 +17,8 @@ defmodule Project1Web.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-		post "/game/:name", PageController, :game
+		post "/join", PageController, :join
+		get "/game/:server_name", PageController, :game
   end
 
   # Other scopes may use custom stacks.

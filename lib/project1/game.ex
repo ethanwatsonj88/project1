@@ -73,9 +73,8 @@ defmodule Project1.Game do
       if c[:health] > 0 do
         b[:name] <> "turn"
       else
-        List.foldr(b[:cards], 0,
-                   fn x, acc -> IO.puts x[:health] end)
-        IO.puts i
+        i = List.foldr(m[a][:cards], 0,
+                   fn x, acc -> if x[:health] > 0 do acc + 1 else acc end end)
         if i == 0 do
           name <> "win"
         else
@@ -137,7 +136,7 @@ defmodule Project1.Game do
              %{ :name => "kick", :damage => 20 },
              %{ :name => "headbutt", :damage => 30},
              %{ :name => "split", :damage => 40},]
-		card = %{ :name => "pikachu", :health => 20, :moves => moves, :img_src => "purple_ghost" }
+		card = %{ :name => "pikachu", :health => 30, :moves => moves, :img_src => "purple_ghost" }
     [card]
 	end
 end
