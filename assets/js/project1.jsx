@@ -196,7 +196,7 @@ class Project1 extends React.Component {
 					if (i == cur_card || deck[i].health <= 0) {
 						continue
 					}
-					switchTo.push(this.renderSwitch(deck[cur_card].name, i, i_am_p1))
+					switchTo.push(this.renderSwitch(deck[i].name, i, i_am_p1))
 				}
 				return <div className="options">{switchTo}</div>
 			}
