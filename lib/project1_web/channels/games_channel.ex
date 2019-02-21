@@ -19,7 +19,8 @@ defmodule Project1Web.GamesChannel do
 		name = socket.assigns[:name]
 		game = Game.fight(socket.assigns[:game], p_name, damage)
 		socket = assign(socket, :game, game)
-		IO.puts "fought"
+		IO.puts "in channel"
+		IO.puts p_name
 		{:reply, {:ok, %{ "game" => Game.client_view(game)}}, socket}
 	end
 

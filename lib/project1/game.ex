@@ -17,6 +17,9 @@ defmodule Project1.Game do
   end
 
   def getOtherPlayer(game, name) do
+		IO.puts "im here"
+		IO.inspect name
+		IO.inspect game[:p1][:name]
     if name == game[:p1][:name] do
       :p2
     else
@@ -34,6 +37,7 @@ defmodule Project1.Game do
 
   def fight(game, name, dmg) do
     a = getOtherPlayer(game, name)
+		IO.inspect a
     b = game[a]
     ind = b[:ind]
 
