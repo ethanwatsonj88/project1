@@ -11,7 +11,7 @@ class Project1 extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.channel = props.channel;		
+		this.channel = props.channel;
 
 		this.client_p_name = props.client_p_name;
 
@@ -19,6 +19,8 @@ class Project1 extends React.Component {
           .join()
           .receive("ok", this.got_view.bind(this))
           .receive("error", resp => { console.log("Unable to join", resp); });
+
+    this.channel.on("update", function() { console.log("got update woo")})
 
 		// p1Deck Contains all cards, currCard is a pointer to that deck
 		this.state = {
@@ -28,7 +30,7 @@ class Project1 extends React.Component {
 			p2_name: "",
 			p1_deck: [{img_src: "red_ghost", health: 0, moves: [{damage: 10, name: "fake"}]}],
 			p2_deck: [{img_src: "blue_ghost", health: 0, moves: Array(4)}],
-			p1_curr_card: 0, 
+			p1_curr_card: 0,
 			p2_curr_card: 0,
 			options_condition: "show_options",
 		}
@@ -88,12 +90,12 @@ class Project1 extends React.Component {
 								{this.renderOptions(i_am_p1)}
 							</div>
 						</div>
-					</div>			
+					</div>
 				</div>
-			);	
+			);
 		}
 	}
-		
+
 	render_my_curr_card(i_am_p1) {
 			if (i_am_p1) {
 			return this.renderCard(this.state.p1_deck[this.state.p1_curr_card].img_src)
@@ -252,7 +254,7 @@ class Project1 extends React.Component {
 					.receive("ok", this.got_view.bind(this));
 		}
 	}
-		
+
 }
 
 function Card(props) {
@@ -281,6 +283,6 @@ function Move(props) {
 
 function Fight(props) {
 	return (
-	<div></div>	
+	<div></div>
 	);
 }
