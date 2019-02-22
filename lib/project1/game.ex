@@ -26,9 +26,9 @@ defmodule Project1.Game do
 '''
   def new() do
     %{
-      p1: player("justin", p1Cards(), 0),
-      p2: player("ethan", p2Cards(), 0),
-      condition: "justin" <> "turn",
+      p1: player("player1", p1Cards(), 0),
+      p2: player("player2", p2Cards(), 0),
+      condition: "player1" <> "turn",
   }
   end
 

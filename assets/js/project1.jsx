@@ -55,13 +55,13 @@ class Project1 extends React.Component {
 			i_am_p1 = false;
 		}
 		// check if people win and stuff, or jst print the game
-		if (this.state.condition == "justinwin") {
+		if (this.state.condition == "player1win") {
 			return (
-				<div>justin won!</div>
+				<div>player1 won!</div>
 			);
-		}	else if (this.state.condition == "ethanwin") {
+		}	else if (this.state.condition == "player2win") {
 			return (
-				<div>ethan won!</div>
+				<div>player2 won!</div>
 			);
 		} else {
 			return (
@@ -150,10 +150,10 @@ class Project1 extends React.Component {
 	}
 
 	renderOptions(i_am_p1) {
-		let only_switch = this.state.condition == "justinswitch" || this.state.condition == "ethanswitch";
+		let only_switch = this.state.condition == "player1switch" || this.state.condition == "player2switch";
 
-		if ((i_am_p1 && (this.state.condition == "justinturn" || this.state.condition == "justinswitch"))
-			|| (!i_am_p1 && (this.state.condition == "ethanturn" || this.state.condition == "ethanswitch"))) {
+		if ((i_am_p1 && (this.state.condition == "player1turn" || this.state.condition == "player1switch"))
+			|| (!i_am_p1 && (this.state.condition == "player2turn" || this.state.condition == "player2switch"))) {
 			// can move
 			let deck = []
 			let cur_card = -1
