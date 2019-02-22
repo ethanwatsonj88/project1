@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :project1, Project1Web.Endpoint,
   http: [port: {:system, "PORT"}],
-	url: [host: "project1.plasticnapkin.com", port: 80],
+  url: [host: "project1.plasticnapkin.com", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true,
   root: ".",
