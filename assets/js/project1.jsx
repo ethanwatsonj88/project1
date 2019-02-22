@@ -169,7 +169,7 @@ class Project1 extends React.Component {
 					<div className="options">
 						{this.renderOption("fight", only_switch)}
 						{this.renderOption("switch")}
-						{this.renderOption("give up", nil, i_am_p1)}
+						{this.renderOption("give up", null, i_am_p1)}
 						</div>
 					);
 			} else if (this.state.options_condition == "show_moves") {
