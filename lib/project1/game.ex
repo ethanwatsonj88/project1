@@ -1,29 +1,4 @@
 defmodule Project1.Game do
-'''
-  def new() do
-    %{
-      p1: nil,
-      p2: nil,
-      condition: :wait,
-    }
-  end
-
-  def join(game, name) do
-    if !game[:p1] do
-      %{
-        p1: player(name, p1Cards(), 0),
-        p2: nil,
-        condition: :wait,
-      }
-    else
-  		%{
-        p1: game[:p1],
-        p2: player(name, p2Cards(), 0),
-        condition: game[:p1] <> "turn",
-  		}
-  	end
-  end
-'''
   def new() do
     %{
       p1: player("player1", p1Cards(), 0),
@@ -86,7 +61,6 @@ defmodule Project1.Game do
     Map.update!(m, :condition, fightHelper)
   end
 
-  #TODO check if switch > 0
   def switch(game, name, ind) do
     a = getPlayer(game, name)
     b = game
@@ -156,7 +130,7 @@ defmodule Project1.Game do
 		card = %{ :name => "yellow ghost", :health => 33, :moves => moves, :img_src => "yellow_ghost" }
 		card2 = %{ :name => "purple ghost", :health => 30, :moves => moves, :img_src => "purple_ghost" }
 		card3 = %{ :name => "blue boy", :health => 42, :moves => moves, :img_src => "blue_boy" }
-	
+
     [card, card2, card3]
 	end
 end
