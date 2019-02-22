@@ -10,9 +10,12 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :project1, Project1Web.Endpoint,
-  http: [:inet6, port: System.get_env("PORT") || 4000],
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  http: [port: {:system, "PORT"}],
+	url: [host: "project1.plasticnapkin.com", port: 80],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  server: true,
+  root: ".",
+  version: Application.spec(:phoenix_distillery, :vsn)
 
 # Do not print debug messages in production
 config :logger, level: :info
