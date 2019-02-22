@@ -66,7 +66,7 @@ class Project1 extends React.Component {
 		} else {
 			return (
 				<div>
-					<h1>Pokemon Showdown</h1>
+					<h1>Fruit Fiesta</h1>
 					<div className="board">
 						<div className="p2_name">
 							{ this.render_opp_name(i_am_p1) }
@@ -210,7 +210,7 @@ class Project1 extends React.Component {
 	}
 
 	renderBack() {
-		return ( 
+		return (
 			<Back
 				onClick={() => this.handleBack()}
 			/>
@@ -224,7 +224,7 @@ class Project1 extends React.Component {
 
 
 		this.setState(state1);
-		
+
 	}
 
 	renderOption(option_name, only_switch, i_am_p1) {
@@ -314,7 +314,7 @@ class Project1 extends React.Component {
 					.receive("ok", this.got_view.bind(this));
 		}
 		let state1 = _.assign({}, this.state, {
-			options_condition: "show_switch",
+			options_condition: "show_options",
 		});
 		this.setState(state1)
 	}
