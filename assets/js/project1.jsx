@@ -169,7 +169,7 @@ class Project1 extends React.Component {
 					<div className="options">
 						{this.renderOption("fight", only_switch)}
 						{this.renderOption("switch")}
-						{this.renderOption("give up")}
+						{this.renderOption("give up", only_switch, i_am_p1)}
 						</div>
 					);
 			} else if (this.state.options_condition == "show_moves") {
@@ -227,7 +227,7 @@ class Project1 extends React.Component {
 		
 	}
 
-	renderOption(option_name, only_switch) {
+	renderOption(option_name, only_switch, i_am_p1) {
 		if (only_switch) {
 			return (
 				<Option
@@ -238,7 +238,7 @@ class Project1 extends React.Component {
 		} else {
 			return (
 				<Option
-					onClick={() => this.handleOptionClick(option_name)}
+					onClick={() => this.handleOptionClick(option_name, i_am_p1)}
 					option_name = {option_name}
 				/>
 			);
@@ -263,7 +263,7 @@ class Project1 extends React.Component {
 		);
 	}
 
-	handleOptionClick(option_name) {
+	handleOptionClick(option_name, i_am_p1) {
 		let state1 = "empty"
 		if (option_name == "fight") {
 			state1 = _.assign({}, this.state, {
@@ -275,12 +275,18 @@ class Project1 extends React.Component {
 				options_condition: "show_switch",
 			});
 		}
-		else if (option-name == "giveup") {
+		else if (option_name == "give up") {
 			state1 = _.assign({}, this.state, {
 				options_condition: "giveup",
 			});
+			if (i_am_p1) {
+				this.channel.push("giveup", { player: this.state.p1_name })
+						.receive("ok", this.got_view.bind(this));
+			} else {
+				this.channel.push("giveup", { player: this.state.p2_name })
+						.receive("ok", this.got_view.bind(this));
+			}
 		}
-
 		this.setState(state1);
 	}
 

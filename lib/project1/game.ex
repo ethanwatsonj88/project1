@@ -98,8 +98,8 @@ defmodule Project1.Game do
   end
 
   def giveup(game, name) do
-    a = getOtherPlayer(game, name)
-    Map.replace!(game, :condition, a[:name] <> "win")
+    a = game[getOtherPlayer(game, name)][:name]
+    Map.replace!(game, :condition, a <> "win")
   end
 
 	def client_view(game) do
